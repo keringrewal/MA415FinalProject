@@ -16,7 +16,7 @@ library(knitr)
 library(kableExtra)
 library(ggmap)
 
-
+#use environ.RData for environment, your path will be difference
 load("/Users/keringrewal/Documents/MA415/MA415FinalProject/new_environ.RData")
 ```
 
