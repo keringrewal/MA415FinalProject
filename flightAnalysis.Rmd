@@ -26,9 +26,9 @@ load("/Users/keringrewal/Documents/MA415/MA415FinalProject/new_environ.RData")
   } 
 </style>
 
-#Introduction {.flexbox .vcenter}
+##Introduction {.flexbox .vcenter}
 
-For this project I choose to analyze flights from six different cities to see if the weather directly impacts the delay time. I felt the timing was not ideal for this, because in America in April there is very little severe weather, so the biggest hinderances will likely be rain and fog, whereas in January or February you may find more issues with snow, ice, and freezing temperatures. My data for this project came from developer.flightstats.com, and I uesd both Flight Status & Track by Airport (departures), and Weather APIs. The flight tracking information goes from about 9:45 am to 3:45 pm on Wednesday, April 25th.
+For this project I choose to analyze flights from six different cities to see if the weather directly impacts the delay time. My hope is that flight departure delays are dependent enough on the airport they are departing from, and not overly dependent on the airport which the plane is arriving from and the aiport that the flight will be landing at. If they are too dependent on these other factors then the coorelation between flights and weather may be low. My data came from developer.flightstats.com, and I uesd both Flight Status & Track by Airport (departures), and Weather APIs. The flight tracking information goes from about 9:45 am to 3:45 pm on Wednesday, April 25th.
 
 
 ##Airports Used
@@ -55,9 +55,8 @@ kable(good_weather, "html", align = 'c') %>%
 
 ```
 These words have have been chosen from the weather forecasts to represent good weather. The numbers, e.g. 5 and 10 represent wind speed, and are included because these are low wind speeds. 
-The limitations of my data is that the forecasts are relatively short, and that means there are not many words in each and therefore ranking the weather based on these words is not completely accurate.
 
-![Good weather](www/sunny-day.jpg)
+![Good weather](sunny-day.jpg)
 
 
 ##Bad Forecast Data by City
@@ -85,8 +84,15 @@ ggplot(delayAnalysis, aes(x = city)) +
   geom_bar(aes(y = (good-bad), color = city), stat="identity", fill="white") +
   geom_point(aes(y = delay/50, color = city)) +
   ylab("weather condition and severity of delay") +
-  labs(title = "General Weather Forecast and Delay Minutes")
+  labs(title = "General Weather Forecast and Delay Minutes") +
+  ylim(-6, 6)
 ```
+
+##Week Long Weather
+
+The afternoon weather patterns appeared to be matching up to the delay times for Boston, Cleveland, and Dallas, but moving on to Miami, Portland, and San Francisco the data is less accurate, leading me to believe that the first three accuracies may have been by chance.
+
+I found that the data from the daily weather forecast was not enough. There are too few words to accurately describe the weather, and I decided that the typical weather patterns may be more indicative of airport delays than a specific afternoon forecast may be. This may have changed data, for example if the day when I took the flight delay data was sunny with light winds and the rest of the week ended up being rainy and windy. 
 
 
 ##Graph of Week-Long Weather Condition and Delay Time
@@ -102,6 +108,20 @@ ggplot(delay_week, aes(x = city)) +
 
 ```
 
+
+#Conclusions
+
+##Based on My Graphs
+The delay times in Boston, Cleveland, Dallas, and Portland show a coorelation to the weather. In San Francisco, there is a slight correlation. In Miami, there is no apparent coorelation. The long delays in Miami may have to do with some factor not related to weather, or conditions at other airports which lead to a backup in Miami. 
+
+##Data
+The limitations of my data was that the forecasts are relatively short, and that means there are not many words in each. Ranking the weather based on these words is therefore not completely accurate. 
+
+Since the flight tracks only give you a 6 hour window, I did not have a lot of data to use for flight delays and this may have made the delay data inaccurate.
+
+
+##Timing
+I felt the timing was not ideal for this particular project, because in America in April there is very little severe weather, so the biggest hinderances will likely be rain and fog, whereas in January or February you may find more issues with snow, ice, and freezing temperatures.
 
 
 
