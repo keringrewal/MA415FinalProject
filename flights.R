@@ -72,6 +72,19 @@ SFO_weather <- content(SFO_weather)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+#Flight tracks
+
 BOS_content <- content(BOS_status)
 
 BOS_content[["flightTracks"]][[1]] <- append(BOS_content[["flightTracks"]][[1]], list("tailNumber" = "None"), 3)
@@ -86,7 +99,7 @@ BOS_tracks4 <- as.tibble(BOS_tracks3)
 
 BOS_delay <- sum(as.numeric(BOS_tracks4$delayMinutes))
 
-BOS_delay <- BOS_delay/nrow(BOS_tracks4)
+BOS_delay <- mean(BOS_delay)
 
 
 
@@ -102,7 +115,7 @@ CLE_tracks4 <- as.tibble(CLE_tracks3)
 
 CLE_delay <- sum(as.numeric(CLE_tracks4$delayMinutes))
 
-CLE_delay <- CLE_delay/nrow(CLE_tracks4)
+CLE_delay <- mean(CLE_delay)
 
 
 
@@ -120,7 +133,7 @@ MIA_tracks4 <- MIA_tracks4[-47, ]
 
 MIA_delay <- sum(as.numeric(MIA_tracks4$delayMinutes))
 
-MIA_delay <- MIA_delay/nrow(MIA_tracks4)
+MIA_delay <- mean(MIA_delay)
 
 
 PDX_content <- content(PDX_status)
@@ -135,7 +148,7 @@ PDX_tracks4 <- as.tibble(PDX_tracks3)
 
 PDX_delay <- sum(as.numeric(PDX_tracks4$delayMinutes))
 
-PDX_delay <- PDX_delay/nrow(PDX_tracks4)
+PDX_delay <- mean(PDX_delay)
 
 
 SFO_content <- content(SFO_status)
@@ -150,7 +163,7 @@ SFO_tracks4 <- as.tibble(SFO_tracks3)
 
 SFO_delay <- sum(as.numeric(SFO_tracks4$delayMinutes))
 
-SFO_delay <- SFO_delay/nrow(SFO_tracks4)
+SFO_delay <- mean(SFO_delay)
 
 
 DFW_content <- content(DFW_status)
@@ -169,7 +182,7 @@ DFW_tracks4 <- DFW_tracks4[-97, ]
 
 DFW_delay <- sum(as.numeric(DFW_tracks4$delayMinutes))
 
-DFW_delay <- DFW_delay/nrow(DFW_tracks4)
+DFW_delay <- mean(DFW_delay)
 
 
 
@@ -179,8 +192,6 @@ DFW_delay <- DFW_delay/nrow(DFW_tracks4)
 
 
 
-
-#kmeans clustering shows what data is similar
 
 
 #WEATHER ANALYSIS
@@ -355,9 +366,20 @@ sfo_forecast7 <- sfo_forecast7 %>% anti_join(stop_words)
 
 
 
+
+
+
+
+
+write.csv(weather_words, file = "afternoon_weather.csv")
+write.csv(weekly_weather, file = "week_weather.csv")
+write.csv(delay, file = "delay.csv")
+#Analysis
+
 good <- c("sun", "sunny", "60s", "70s", "80s", "80", "warm", "hot", "clear", "light", "5", "10", "15", "steady", "upper", "80", "85")
 
 bad <- c("20", "25", "30", "35", "30s", "40s", "50s", "rain", "fog", "patchy", "cloudy", "thunderstorm", "thunderstorms", "cooler", "100", "showers", "partly", "cool", "lower", "percipitation")
+
 
 weather_words <- (Reduce(function(x, y) merge(x, y, all=TRUE), list(BOS_forecast3, CLE_forecast3, DFW_forecast3, MIA_forecast3, PDX_forecast3, SFO_forecast3)))
 
@@ -430,7 +452,7 @@ ggplot(delay_week, aes(x = city)) +
   labs(title = "Week-Long Weather Forecast and Delay Minutes") +
   ylim(-25, 25)
 
-map1 <- get_map(location = c(-95.7129, 37.0902), zoom = 3, maptype = "roadmap")
+map1 <- get_map(location = c(-95.7129, 37.0902), zoom = 4, maptype = "roadmap")
 
 df <- data.frame(location = c('Boston Logan International Airport', 'Cleveland Hopkins International Airport', 'Dallas/Fort Worth International Airport', 'Miami International Airport', 'Portland International Airport', 'San Francisco International'), stringsAsFactors = FALSE)
 

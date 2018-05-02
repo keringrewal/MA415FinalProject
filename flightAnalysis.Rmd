@@ -26,7 +26,7 @@ load("/Users/keringrewal/Documents/MA415/MA415FinalProject/new_environ.RData")
   } 
 </style>
 
-##Introduction {.flexbox .vcenter}
+#Introduction {.flexbox .vcenter}
 
 For this project I choose to analyze flights from six different cities to see if the weather directly impacts the delay time. I felt the timing was not ideal for this, because in America in April there is very little severe weather, so the biggest hinderances will likely be rain and fog, whereas in January or February you may find more issues with snow, ice, and freezing temperatures. My data for this project came from developer.flightstats.com, and I uesd both Flight Status & Track by Airport (departures), and Weather APIs. The flight tracking information goes from about 9:45 am to 3:45 pm on Wednesday, April 25th.
 
@@ -50,27 +50,30 @@ The first data I used to examine the weather conditions was the afternoon foreca
 ```{r, echo= FALSE}
 kable(good_weather, "html", align = 'c') %>%
   kable_styling() %>%
-  scroll_box(height = "400px") %>%
+  scroll_box(height = "300px") %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "float_left")
 
 ```
 These words have have been chosen from the weather forecasts to represent good weather. The numbers, e.g. 5 and 10 represent wind speed, and are included because these are low wind speeds. 
+The limitations of my data is that the forecasts are relatively short, and that means there are not many words in each and therefore ranking the weather based on these words is not completely accurate.
 
-The limitations of this data is that the forecasts are relatively short, and that means there are not many words in each and therefore ranking the weather based on these words is not completely accurate.
+![Good weather](www/sunny-day.jpg)
 
 
 ##Bad Forecast Data by City
 ```{r, echo= FALSE}
 kable(bad_weather, "html", align = 'c') %>%
   kable_styling() %>%
-  scroll_box(height = "400px") %>%
+  scroll_box(height = "300px") %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "float_right")
 
 ```
 These words have have been chosen from the weather forecasts to represent bad weather. The numbers, e.g. 20 and 30 represent wind speed, and are included because these are high wind speeds. 
 
-The limitations of this data is that the forecasts are relatively short, and that means there are not many words in each and therefore ranking the weather based on these words is not completely accurate.
 
+```{r, fig.width = 4, echo=FALSE}
+include_graphics("www/rainy-day.jpg")
+```
 
 ##Graph of Afternoon Weather Condition and Delay Time
 
@@ -98,3 +101,10 @@ ggplot(delay_week, aes(x = city)) +
   ylim(-25, 25)
 
 ```
+
+
+
+
+
+
+
