@@ -1,0 +1,12 @@
+name: flightanalysis
+title:
+username:
+account: keringrewal
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 336089
+bundleId: 1352885
+url: https://keringrewal.shinyapps.io/flightanalysis/
+when: 1525312912.17652
+asMultiple: FALSE
+asStatic: FALSE

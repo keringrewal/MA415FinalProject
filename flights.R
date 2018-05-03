@@ -370,10 +370,15 @@ sfo_forecast7 <- sfo_forecast7 %>% anti_join(stop_words)
 
 
 
+write.csv(delayAnalysis, file = "afternoon_weather.csv")
+write.csv(delay_week, file = "week_weather.csv")
 
-write.csv(weather_words, file = "afternoon_weather.csv")
-write.csv(weekly_weather, file = "week_weather.csv")
-write.csv(delay, file = "delay.csv")
+
+
+#write.csv(weather_words, file = "afternoon_weather.csv")
+#write.csv(weekly_weather, file = "week_weather.csv")
+#write.csv(delay, file = "delay.csv")
+
 #Analysis
 
 good <- c("sun", "sunny", "60s", "70s", "80s", "80", "warm", "hot", "clear", "light", "5", "10", "15", "steady", "upper", "80", "85")
@@ -450,7 +455,7 @@ ggplot(delay_week, aes(x = city)) +
   geom_point(aes(y = delay/10, color = city)) +
   ylab("weather condition and severity of delay") +
   labs(title = "Week-Long Weather Forecast and Delay Minutes") +
-  ylim(-25, 25)
+  ylim(-max(abs(delay_week$good-delay_week$bad)), max(abs(delay_week$good-delay_week$bad)))
 
 map1 <- get_map(location = c(-95.7129, 37.0902), zoom = 4, maptype = "roadmap")
 

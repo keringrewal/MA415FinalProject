@@ -5,40 +5,13 @@ library(tidytext)
 library(ggplot2)
 library(ggmap)
 library(shinythemes)
+library(rsconnect)
 
 
 
 #read in useful data
-weather_words <- read.csv("afternoon_weather.csv")
-weekly_weather <- read.csv("week_weather.csv")
-delay <- read.csv("delay.csv")
-
-good <- c("sun", "sunny", "60s", "70s", "80s", "80", "warm", "hot", "clear", "light", "5", "10", "15", "steady", "upper", "80", "85")
-
-bad <- c("20", "25", "30", "35", "30s", "40s", "50s", "rain", "fog", "patchy", "cloudy", "thunderstorm", "thunderstorms", "cooler", "100", "showers", "partly", "cool", "lower", "percipitation")
-
-good_weather <- weather_words %>% filter(word %in% good)
-
-bad_weather <- weather_words %>% filter(word %in% bad)
-
-good_week <- weekly_weather %>% filter(word %in% good)
-bad_week <- weekly_weather %>% filter(word %in% bad)
-
-good2 <- count(good_weather, city)
-names(good2) <- c("city", "good")
-bad2 <- count(bad_weather, city)
-names(bad2) <- c("city", "bad")
-de <- data.frame(c("MIA", "PDX"), c(0, 0))
-names(de) <- c("city", "bad")
-bad2 <- rbind(bad2, de)
-
-goodw <- count(good_week, city)
-names(goodw) <- c("city", "good")
-badw <- count(bad_week, city)
-names(badw) <- c("city", "bad")
-
-afternoon_words <- merge(good2, bad2)
-week_words <- merge(goodw, badw)
+afternoon_words <- read.csv("afternoon_weather.csv")
+week_words <- read.csv("week_weather.csv")
 
 
 # Define UI for application that draws a histogram
@@ -117,7 +90,8 @@ server <- function(input, output) {
       geom_bar(aes(y = (good-bad), color = city), stat="identity", fill="white") +
       geom_point(aes(y = delay/10, color = city)) +
       ylab("weather condition and severity of delay") +
-      labs(title = "Weather Forecast and Delay Minutes")
+      labs(title = "Weather Forecast and Delay Minutes") + 
+      ylim(-max(abs(delay_week$good-delay_week$bad)), max(abs(delay_week$good-delay_week$bad)))
     
   })
   
